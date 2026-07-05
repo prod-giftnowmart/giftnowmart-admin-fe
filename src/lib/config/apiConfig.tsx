@@ -1,0 +1,72 @@
+type ApiEndPoints = {
+    auth: {
+        signin: string,
+        refresh: string,
+        logout: string,
+        createUser: string,
+        getUser: (search: string, page: string, limit: string, status: string | boolean, roleId: string[]) => string,
+        update: string,
+        delete: (ids: string[]) => string,
+        resetPassword: string
+    },
+    category: {
+        createCategory: string,
+        getCategoryList: (page: string, limit: string, search: string) => string,
+        delete: (ids: string[]) => string,
+        update: string
+    },
+    brand: {
+        createBrand: string,
+        getBrandList: (page: string, limit: string, search: string) => string,
+        delete: (ids: string[]) => string,
+        update: string
+    },
+    product: {
+        createProduct: string,
+        getProductList: (page: string, limit: string, search: string) => string,
+        delete: (ids: string[]) => string,
+        update: string,
+        getProductCount: string
+    },
+    cloudionary: {
+        brandLogo: string,
+    },
+}
+
+export const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export const API_ENDPOINTS: ApiEndPoints = {
+    auth: {
+        signin: "/auth/sign-in",
+        refresh: "/auth/refresh",
+        logout: "/auth/logout",
+        createUser: "/auth/create-user",
+        getUser: (search, page, limit, status, roleId) => `/auth/get-user?search=${search}&page=${page}&limit=${limit}&isUserActive=${status === "all" ? "all" : status === "active" ? true : false}&roles=${encodeURIComponent(JSON.stringify(roleId))}`,
+        update: "/auth/update",
+        delete: (ids) => `/auth/delete-users?ids=${encodeURIComponent(JSON.stringify(ids))}`,
+        resetPassword: "/auth/reset-password-by-admin"
+    },
+    category: {
+        createCategory: "/category",
+        getCategoryList: (page, limit, search) => `/category?page=${page}&limit=${limit}&search=${search}`,
+        delete: (ids) => `/category?ids=${encodeURIComponent(JSON.stringify(ids))}`,
+        update: "/category/update"
+    },
+    brand: {
+        createBrand: "/brand",
+        getBrandList: (page, limit, search) => `/brand?page=${page}&limit=${limit}&search=${search}`,
+        delete: (ids) => `/brand?ids=${encodeURIComponent(JSON.stringify(ids))}`,
+        update: "/brand/update"
+    },
+    product: {
+        createProduct: "/product",
+        getProductList: (page, limit, search) => `/product?page=${page}&limit=${limit}&search=${search}`,
+        delete: (ids) => `/product?ids=${encodeURIComponent(JSON.stringify(ids))}`,
+        update: "/product",
+        getProductCount: "/product/get-product-count"
+    },
+    cloudionary: {
+        brandLogo: "/cloudionary/brand-logo",
+    },
+
+} 
